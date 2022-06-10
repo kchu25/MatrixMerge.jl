@@ -1,6 +1,10 @@
+
 module MatrixMerge
 
+push!(LOAD_PATH, "/home/shane/.julia/dev/")
 using CUDA 
+using SimDNA
+using FastaLoader
 
 include("SEARCH_setup.jl")
 include("wrapper.jl")

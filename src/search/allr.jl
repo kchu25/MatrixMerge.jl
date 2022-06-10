@@ -87,12 +87,12 @@ function most_freq_occured_len!(ms, msa_counts, grouped)
 end
 
 
-function allr_merge!(g::good_stuff{T,S,Q};
+function allr_merge!(g::good_stuff{T,S};
                      re_evaluate_pfm=false,
                      re_evaluate_pwm=true,
                      re_evaluate_thresh=true,
                      re_evaluate_scores=false
-                     ) where {T,S,Q}
+                     ) where {T,S}
     new_pfms = Matrix{S}[];
     msa_counts = length.(g.ms.positions);
     allr_threshs = allr_thresh.(g.ms.lens, 

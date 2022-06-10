@@ -18,15 +18,15 @@ Base.@kwdef mutable struct SEARCH_setup{T <: Integer, S <: Real}
     pfm_count_gpu::T=32                            # use gpu to scan if we have number of pfms higher than this number
 end
 
-mutable struct good_stuff{T <: Integer, S <: Real, Q <: Complex}
-    data::Union{Sim_DNA{T,S}, FASTA_DNA{T,S}}
-    search::SEARCH_setup{T, S}    
+mutable struct good_stuff{T <: Integer, S <: Real}
+    data::Union{Sim_DNA{T,S}, FASTA_DNA{S}}
+    search::SEARCH_setup{T,S}    
     ms::Union{Nothing, motifs}                      # motifs
     ms_bg::Union{Nothing, motifs}                   # copy of the motifs to scan the background for fisher exact tests
 
-    function good_stuff{T,S,Q}(data::Union{Sim_DNA{T,S}, FASTA_DNA{T,S}},
+    function good_stuff{T,S}(data::Union{Sim_DNA{T,S}, FASTA_DNA{S}},
                                search_setup::SEARCH_setup{T, S}
-                               ) where {T <: Integer, S <: Real, Q <: Complex}
+                               ) where {T <: Integer, S <: Real}
         new(data, search_setup, nothing, nothing)
     end
 end

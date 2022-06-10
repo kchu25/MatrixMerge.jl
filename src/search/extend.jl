@@ -172,11 +172,11 @@ function extension!(L, positions, mlen, comp,
     return new_positions, mlen+len_inc
 end
 
-function extend!(g::good_stuff{T,S,Q}; re_evaluate_pfm=true,
+function extend!(g::good_stuff{T,S}; re_evaluate_pfm=true,
                     re_evaluate_pwm=false,
                     re_evaluate_thresh=false,
                     re_evaluate_scores=false, 
-                    smoothing=true) where {T,S,Q}
+                    smoothing=true) where {T,S}
     @inbounds for l = 1:g.ms.num_motifs
         ps = g.search.pseudocounts;
         if !isnothing(g.ms.use_comp)

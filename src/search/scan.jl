@@ -20,7 +20,7 @@ function scan_n(data_n, pwm::Matrix{S}, pwm_len::T, L::T) where {S<:Real,T<:Inte
     return max_score_ind, max_score
 end
 
-function overlapping_scan_bg!(g::good_stuff{T,S,Q}) where {T,S,Q}
+function overlapping_scan_bg!(g::good_stuff{T,S}) where {T,S}
     p = [Dict{T,T}() for _ = 1:g.ms.num_motifs];
     s = [Dict{T,S}() for _ = 1:g.ms.num_motifs];
     for k = 1:g.ms.num_motifs   
@@ -45,7 +45,7 @@ function overlapping_scan_bg!(g::good_stuff{T,S,Q}) where {T,S,Q}
     return p, s
 end
 
-function non_overlapping_scan_bg!(g::good_stuff{T,S,Q}, positions, scores) where {T,S,Q}
+function non_overlapping_scan_bg!(g::good_stuff{T,S}, positions, scores) where {T,S}
     @inbounds for n = 1:g.data.N
         spans_pos = T[]; 
         spans_len = T[];
@@ -86,11 +86,11 @@ function non_overlapping_scan_bg!(g::good_stuff{T,S,Q}, positions, scores) where
     return positions, scores
 end
 
-function overlapping_scan!(g::good_stuff{T,S,Q},
+function overlapping_scan!(g::good_stuff{T,S},
                            re_evaluate_pfm=false,
                            re_evaluate_pwm=false,
                            re_evaluate_thresh=false,
-                           re_evaluate_scores=false) where {T,S,Q}
+                           re_evaluate_scores=false) where {T,S}
     p, s, u = motifs_prep(g.ms);
 
     for k = 1:g.ms.num_motifs   
@@ -120,14 +120,14 @@ function overlapping_scan!(g::good_stuff{T,S,Q},
                         re_evaluate_thresh, re_evaluate_scores);
 end
 
-function non_overlap_scan!(g::good_stuff{T,S,Q}; 
+function non_overlap_scan!(g::good_stuff{T,S}; 
                            re_evaluate_pfm=true,
                            re_evaluate_pwm=true,
                            re_evaluate_thresh=true,
                            re_evaluate_scores=false,
                            smoothing=true,
                            less_pseudocount=false
-                           ) where {T,S,Q}
+                           ) where {T,S}
 
     @inbounds for n = 1:g.data.N
         spans_pos = T[]; 
@@ -173,13 +173,13 @@ function non_overlap_scan!(g::good_stuff{T,S,Q};
                             less_pseudocount=less_pseudocount);
 end
 
-function scan_w_gpu!(g::good_stuff{T,S,Q}, data_matrix_gpu; 
+function scan_w_gpu!(g::good_stuff{T,S}, data_matrix_gpu; 
                     re_evaluate_pfm=false,
                     re_evaluate_pwm=false,
                     re_evaluate_thresh=false,
                     re_evaluate_scores=false,
                     scan_bg=false
-                    )  where {T,S,Q}
+                    )  where {T,S}
 
     maxlen = maximum(g.ms.lens); pwms = zeros(S, g.ms.num_motifs, 4, maxlen);
     @inbounds for i = 1:g.ms.num_motifs pwms[i,:,1:g.ms.lens[i]] = g.ms.pwms[i]; end

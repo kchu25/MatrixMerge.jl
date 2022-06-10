@@ -165,14 +165,14 @@ function scores_reevaluation(new_pfms,
     return new_scores
 end
 
-function re_evaluations!(g::good_stuff{T,S,Q}, 
+function re_evaluations!(g::good_stuff{T,S}, 
                         re_evaluate_pfm, 
                         re_evaluate_pwm,
                         re_evaluate_thresh,
                         re_evaluate_scores;
                         smoothing=true,
                         less_pseudocount=false
-                        ) where {T,S,Q}        
+                        ) where {T,S}        
 
     if re_evaluate_pfm    
         g.ms.pfms = posdicts2pfms(g.ms.positions , g.ms.lens, 
