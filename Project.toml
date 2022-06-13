@@ -9,13 +9,19 @@ DataStructures = "864edb3b-99cc-5e75-8d2d-829cb0a9cfe8"
 Documenter = "e30172f5-a6a5-5a46-863b-614d45cd2de4"
 DocumenterTools = "35a29f4d-8980-5a13-9543-d66fff28ecb8"
 DoubleFloats = "497a8b3b-efae-58df-a0af-a86822472b78"
+FastaLoader = "139838d8-4077-4d8a-94e1-e6dd554a184c"
+HypothesisTests = "09f84164-cd44-5f33-b23f-e6b0d136a0d5"
+StatsBase = "2913bbd2-ae8a-5f71-8c99-4fb6c76f3a91"
 
 [compat]
 CUDA = "3.10.1"
-DoubleFloats = "1.2.2"
 DataStructures = "0.18.13"
 Documenter = "0.27.19"
 DocumenterTools = "0.1.14"
+DoubleFloats = "1.2.2"
+FastaLoader = "0.1.2"
+HypothesisTests = "0.10.10"
+StatsBase = "0.33.16"
 julia = "1.7.2"
 
 [extras]

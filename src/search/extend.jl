@@ -195,7 +195,7 @@ function extend!(g::good_stuff{T,S}; re_evaluate_pfm=true,
         end
     end
 
-    indicator = (length.(g.ms.positions) .> 0) .& (g.ms.lens .> g.cdl.filter_size+2);
+    indicator = (length.(g.ms.positions) .> 0) .& (g.ms.lens .≥ g.smallest_pwm_size);
     g.ms.positions=g.ms.positions[indicator];
     g.ms.pfms=g.ms.pfms[indicator];
     g.ms.lens=g.ms.lens[indicator];

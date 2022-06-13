@@ -1,3 +1,10 @@
+
+############# for PWM_Touzet.jl ################
+const _granularity_ = 1e-1; # initial granularity for score2pvalue and pval2score
+const _k_ = 100; # decreasing factor for finer granularity in each iteration
+const _bg_ = [.25,.25,.25,.25]; # default background
+################################################
+
 #=
 Best possible score of a PWM
 

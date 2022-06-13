@@ -1,9 +1,7 @@
 push!(LOAD_PATH, "/home/shane/.julia/dev/")
 using CUDA 
 using SimDNA
-using FastaLoader, DataStructures, DoubleFloats
-
-
+using FastaLoader, DataStructures, DoubleFloats, Statsbase
 
 include("src/SEARCH_setup.jl")
 include("src/wrapper.jl")
@@ -17,3 +15,4 @@ include("src/search/allr.jl")
 
 
 
+println("hi")

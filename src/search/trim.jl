@@ -61,7 +61,7 @@ function masked_trim!(g; re_evaluate_pfm=false,
     end
     
     # rid of motifs with len less than 7
-    indicator = size.(g.ms.pfms,2) .> g.cdl.filter_size+1; 
+    indicator = size.(g.ms.pfms,2) .≥ g.smallest_pwm_size
     # rid of motifs with no activations
     if !isnothing(g.ms.positions)
         indicator_pos = length.(g.ms.positions) .> 0;
@@ -70,6 +70,7 @@ function masked_trim!(g; re_evaluate_pfm=false,
 
     g.ms.pfms = g.ms.pfms[indicator];
     g.ms.lens = size.(g.ms.pfms,2);
+    # println(g.ms.lens)
     g.ms.num_motifs = length(g.ms.pfms);
     update_positions ? g.ms.positions=g.ms.positions[indicator] : g.ms.positions=nothing;    
     
