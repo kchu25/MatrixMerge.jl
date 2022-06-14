@@ -17,17 +17,20 @@ Base.@kwdef mutable struct SEARCH_setup{T <: Integer, S <: Real}
     default_max_iter::T=6                          # default max iteration for maximizing the entropy scores    
     pfm_count_gpu::T=32                            # use gpu to scan if we have number of pfms higher than this number
 end
+Base.@kwdef mutable struct performance_setup{S <: Real}
+    # performance
+    ssc::Union{Nothing, S}=nothing                       # sum f scores
+    gt_cover_perc::Union{Nothing, S}=nothing
+    false_cover_perc::Union{Nothing, S}=nothing
+    gt_n_cover_perc::Union{Nothing, S}=nothing
+    a_cover_perc::Union{Nothing, S}=nothing
+    jaspar_OOPS::Bool=false
+    perf_coeff::Union{Nothing, S}=nothing
+end
 
 mutable struct good_stuff{T <: Integer, S <: Real}
     data::Union{Sim_DNA, FASTA_DNA}
-    # L::T
-    # N::T
-    # data_matrix::Union{Array{S,3}, Array{S,2}}
-    # data_matrix_gpu::Union{CuArray{S,3}, CuArray{S,2}}
-    # data_matrix_bg::Array{S,2}
-    # raw_data::Union{Nothing, Vector{sim_dna_str_w_motif}}
-    # gt_motif::Union{Nothing, motif_type}
-    # prob_per_seq::Union{Nothing, Float16, Float32, Float64}
+    performance::performance_setup{S}
     search::SEARCH_setup{T,S}    
     ms::Union{Nothing, motifs}                      # motifs
     ms_bg::Union{Nothing, motifs}                   # copy of the motifs to scan the background for fisher exact tests
@@ -58,6 +61,7 @@ mutable struct good_stuff{T <: Integer, S <: Real}
             nothing            
         )
         new(data,
+            performance_setup{S}(),
             search_setup, 
             ms, nothing, 
             smallest_pwm_size)
