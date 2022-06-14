@@ -8,7 +8,9 @@ using CUDA, DataStructures, DoubleFloats,
 export good_stuff, 
        SEARCH_setup, 
        find_motif, 
-       find_and_save_motif_sim
+       find_and_save_motif_sim,
+       save_found_results_sim 
+
 
 include("SEARCH_setup.jl")
 include("wrapper.jl")

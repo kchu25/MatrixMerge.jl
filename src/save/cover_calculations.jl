@@ -163,14 +163,13 @@ function num_overlap(r1::UnitRange, r2::UnitRange)
         return 0;
     end
 end
-println("!23)")
+
 #=
 tests:
     num_overlap(1:1,1:5) == 1
     num_overlap(13:16,1:5) == 0
     num_overlap(1:1,1:5) == 1
     num_overlap(1:1,1:5) == 1
-
 =#
 
 #= 
@@ -380,21 +379,6 @@ function activate_cover_ratio(gt_overlaps, bg_overlaps, activated_f_individial)
     reduce(hcat, [[gt_overlaps[:,i] ./ activated_f_individial[i]; 
                 bg_overlaps[i]/activated_f_individial[i]] 
                 for i = 1:length(activated_f_individial)])
-end
-
-# function gt_cover_public_data(ms, motif, data::DNAdataset)
-#     gt = get_gt(motif, data);
-#     gt_area, gt_area_each, bg_area, activated_f_area, activated_f_individial, gt_overlaps, bg_overlaps = get_overlaps(gt, ms, data);    
-#     sum_overlap = sum(gt_overlaps);
-#     gt_cover_ratio = sum(gt_overlaps) ./ gt_area;
-#     gt_n_cover = 1 - gt_cover_ratio;
-#     a_cover = sum_overlap / activated_f_area;
-#     fp_ratio = sum(bg_overlaps)/activated_f_area;
-#     return gt_cover_ratio, fp_ratio, gt_n_cover, a_cover
-# end
-
-function gt2transfac(g, target_folder::String)
-
 end
 
 function gt_cover_by(g, target_folder::String)

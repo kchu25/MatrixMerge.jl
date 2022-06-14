@@ -1,4 +1,3 @@
-
 function get_ssc(g::good_stuff) 
     ssc = sum([sum([g.ms.scores[k][n] 
                                 for n in keys(g.ms.scores[k])])
@@ -71,6 +70,5 @@ function find_motif(g::good_stuff)
             last_ssc = cur_ssc;
         end
     end
-    
-
 end
+
