@@ -7,7 +7,7 @@ using CUDA, DataStructures, DoubleFloats,
 
 export good_stuff, 
        SEARCH_setup, 
-       find_motif, 
+       find_motif!, 
        find_and_save_motif_sim,
        save_found_results_sim 
 
@@ -28,7 +28,7 @@ include("save/save_learned_results.jl")
 
 
 function find_and_save_motif_sim(g::good_stuff, target_folder::String)
-    find_motif(g);
+    find_motif!(g);
     save_found_results_sim(target_folder, g);
 end
 

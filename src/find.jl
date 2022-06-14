@@ -6,7 +6,7 @@ function get_ssc(g::good_stuff)
     return ssc
 end
 
-function find_motif(g::good_stuff)
+function find_motif!(g::good_stuff)
     @time for _ = 1:g.search.default_max_iter
         scan_w_gpu!(g, g.data.data_matrix_gpu; re_evaluate_pfm=false,
                                                re_evaluate_pwm=false,
