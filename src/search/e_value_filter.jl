@@ -49,18 +49,25 @@ function rid_of_len_less_than_six!(g::good_stuff)
     g.ms.pwms = g.ms.pwms[pass_indicator];
     g.ms.thresh = g.ms.thresh[pass_indicator];
     g.ms.lens = g.ms.lens[pass_indicator];
+    # g.ms.positions = g.ms.positions[pass_indicator];
+    # println(length(g.ms.positions))
     g.ms.num_motifs = length(g.ms.pfms);
 end
 
 function get_evalues_each(g::good_stuff)
-    bg_pos = overlapping_scan_bg!(g);
+    bg_pos, _ = overlapping_scan_bg!(g);
     len_positions = length.(g.ms.positions);
     len_positions_bg = length.(bg_pos);    
     evalues = fill(0.0, g.ms.num_motifs);  
+
+    # println(length(g.ms.positions))
+    # println(g.ms.num_motifs)
+    # println(length(len_positions_bg))
+
     @inbounds for i = 1:g.ms.num_motifs
         a = len_positions[i]; b = len_positions_bg[i];
         q = FisherExactTest(promote_i(a, g.data.N, b, g.data.N)...);     
-        evalues[i] = HypothesisTests.pvalue(q)*g.ms.num_motifs;
-    end    
+        evalues[i] = HypothesisTests.pvalue(q)*Float64(g.ms.num_motifs);
+    end
     return evalues
 end

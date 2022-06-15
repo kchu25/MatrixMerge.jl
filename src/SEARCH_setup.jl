@@ -7,6 +7,7 @@ mutable struct motifs{T <: Integer, S <: Real}
     positions::Union{Nothing, Vector{Dict{T, T}}}
     scores::Union{Nothing, Vector{Dict{T, S}}}
     use_comp::Union{Nothing, Vector{Dict{T, Bool}}}
+    e_values::Union{Nothing, Vector{Float64}}
 end
 
 function init_motifs(pfms::Vector{Matrix{S}}) where {S <: Real}
@@ -23,6 +24,7 @@ function init_motifs(pfms::Vector{Matrix{S}}) where {S <: Real}
         type_int(num_pfms),
         nothing, 
         nothing,
-        nothing 
+        nothing,
+        nothing
     );
 end

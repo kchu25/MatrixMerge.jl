@@ -19,8 +19,11 @@ function save_found_results_sim(output_folder::String, g::Union{good_stuff, Noth
         # get binding info, score contribution, and perf-coeff-d; return the max lr score
         max_lr_score = gt_cover_by(g, output_folder);
         # get the performance coefficient
-        perf_coeff = get_perform_coeff(g.ms, g.data.motif, g.data);
+        perf_coeff = get_perform_coeff(g.ms, g.data.motif, g.data);        
         @info "perf coeff: $perf_coeff"
+        ###### get the e-values ##########################
+        g.ms.e_values = get_evalues_each(g);
+        # println(g.ms.e_values...)
         ###### save the pickle ###########################
         gms = g.data.motif; dms = g.ms;
         @save output_folder*"/gt_motif.jld2" gms

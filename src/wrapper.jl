@@ -33,8 +33,9 @@ mutable struct good_stuff{T <: Integer, S <: Real}
     performance::performance_setup{S}
     search::SEARCH_setup{T,S}    
     ms::Union{Nothing, motifs}                      # motifs
-    ms_bg::Union{Nothing, motifs}                   # copy of the motifs to scan the background for fisher exact tests
+    ms_bg::Union{Nothing, motifs}                   # copy of the motifs to scan the background for fisher exact tests    
     smallest_pwm_size::T
+    
 
     function good_stuff{T,S}(data, search_setup::SEARCH_setup{T, S},
                              filters, pfm_len; smallest_pwm_size=6
@@ -58,12 +59,14 @@ mutable struct good_stuff{T <: Integer, S <: Real}
             T(num_filters),
             nothing, 
             nothing,
-            nothing            
+            nothing,
+            nothing
         )
         new(data,
             performance_setup{S}(),
             search_setup, 
             ms, nothing, 
-            smallest_pwm_size)
+            smallest_pwm_size
+            )
     end
 end
