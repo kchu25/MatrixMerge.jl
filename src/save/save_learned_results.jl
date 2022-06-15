@@ -1,4 +1,3 @@
-
 function save_found_motifs(target_folder::String, ms)
     for (ind,pfm) in enumerate(ms.pfms) 
         CSV.write(target_folder*"/d_pfm$ind.csv",  Tables.table(pfm), writeheader=false) 

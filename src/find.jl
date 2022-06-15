@@ -77,7 +77,8 @@ function try_to_find_motif(filters, fil_size, data, target_folder_expr;
                            number_trials=10,
                            pval_thresh_inc=5e-4,
                            eval_thresh_inc_1=2.5e-1,
-                           eval_thresh_inc_2=1e-2)                              
+                           eval_thresh_inc_2=1e-2,
+                           simulated_data=false)                              
     g=nothing; motif_found = false; 
     pval_thresh = dat_t(2.7e-4);     
     eval_thresh1 = dat_t(5e-1);                                       
@@ -113,6 +114,10 @@ function try_to_find_motif(filters, fil_size, data, target_folder_expr;
     if motif_found
         save_found_results_sim(target_folder_expr, g)
     else
+        if simulated_data
+            # for simulated data, if couldn't find anything, as least save the ground truth
+            @save target_folder_expr*"/gt_motif.jld2" g.data.motif
+        end
         return nothing
     end
 end
