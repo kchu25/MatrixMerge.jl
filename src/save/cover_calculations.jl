@@ -8,7 +8,7 @@ end
 function get_gt(motif::gapped_k_block_motif, data)
     mode_parts = [(1,k) for k = 1:motif.K]
     lens = [i.len for i in motif.P_motifs.P]
-    covering = Dict(mp=>Dict{Int16,Int16}() for mp in mode_parts);
+    covering = Dict(mp=>Dict{Int,Int}() for mp in mode_parts);
     for n = 1:data.N
         if data.raw_data[n].mode > 0
             start_ = data.raw_data[n].motif_where[1];
@@ -53,7 +53,7 @@ function get_gt(motif::mixture_gapped_k_block_motif, data)
     # TODO: maybe make it more readable later
     mode_parts = [(0,k) for k = 1:motif.motif.K];
     lens = [i.len for i in motif.motif.P_motifs.P];
-    covering = Dict(mp=>Dict{Int16,Int16}() for mp in mode_parts);
+    covering = Dict(mp=>Dict{Int,Int}() for mp in mode_parts);
     for n = 1:data.N
         if data.raw_data[n].mode > 0
             # println(n)
@@ -105,7 +105,7 @@ end
 function get_gt(motif::mixture_k_block_motif, data)
     mode_parts = [(i,1) for i = 1:motif.num_modes];
     lens = [i[end]-i[1]+1 for i in motif.modes];
-    covering = Dict(mp=>Dict{Int16,Int16}() for mp in mode_parts);
+    covering = Dict(mp=>Dict{Int,Int}() for mp in mode_parts);
     for n = 1:data.N
         if data.raw_data[n].mode > 0
             start_ = data.raw_data[n].motif_where[1];
@@ -119,12 +119,12 @@ end
 function get_gt(motif::single_block_motif, data)
     mode_parts = [(1,1)];
     lens = [motif.len];
-    covering = Dict(mp=>Dict{Int16,Int16}() for mp in mode_parts);
+    covering = Dict(mp=>Dict{Int,Int}() for mp in mode_parts);
     for n = 1:data.N
         if data.raw_data[n].mode > 0
             start_ = data.raw_data[n].motif_where[1];
             mode_ = data.raw_data[n].mode;
-            covering[mode_parts[mode_]][n] = start_;
+            covering[mode_parts[mode_]][n] = start_; # TODO fix Int16?
         end
     end
     return ground_truth(mode_parts, length(mode_parts), covering, lens)
