@@ -20,7 +20,7 @@ function save_found_results_sim(output_folder::String, g::Union{good_stuff, Noth
         max_lr_score = gt_cover_by(g, output_folder);
         # get the performance coefficient
         perf_coeff = get_perform_coeff(g.ms, g.data.motif, g.data);
-        println("perf coeff: $perf_coeff")
+        @info "perf coeff: $perf_coeff"
         ###### save the pickle ###########################
         gms = g.data.motif; dms = g.ms;
         @save output_folder*"/gt_motif.jld2" gms

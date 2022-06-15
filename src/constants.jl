@@ -1,3 +1,5 @@
+int_t, dat_t = Int32, Float32;
+
 # kernel thread-block setup
 const threads_1d = 512;
 const threads_2d = 32;
