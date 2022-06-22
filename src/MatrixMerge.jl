@@ -3,7 +3,7 @@ module MatrixMerge
 using CUDA, DataStructures, DoubleFloats, 
       StatsBase, HypothesisTests, SimDNA,
       FastaLoader, JLD2, DataFrames, Mustache,
-      CSV
+      CSV, Gadfly
 
 export good_stuff, 
        SEARCH_setup, 
@@ -24,11 +24,16 @@ include("search/e_value_filter.jl")
 include("search/allr.jl")
 include("save_sim/cover_calculations.jl")
 include("save_sim/save_learned_results.jl")
+include("save_expr/get_config.jl")
+include("save_expr/template.jl")
+include("save_expr/save.jl")
+
 include("find.jl")
 
 # function find_and_save_motif_sim(g::good_stuff, target_folder::String)
 #     find_motif!(g);
 #     save_found_results_sim(target_folder, g);
+# println("hi")
 # end
 
 end
