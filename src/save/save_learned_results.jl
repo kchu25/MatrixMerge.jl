@@ -4,10 +4,8 @@ function save_found_motifs(target_folder::String, ms)
     end
 end
 
-
 const pkg_dir = pkgdir(MatrixMerge);
 const script_loc_template = pkg_dir*"/scripts_python/jinja_templates/";
-
 
 function save_found_results_sim(output_folder::String, g::Union{good_stuff, Nothing})        
     if !isnothing(g)
