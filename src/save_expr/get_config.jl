@@ -128,10 +128,17 @@ function make_configurations_plots_2(configurations,
                 Guide.ylabel("    "),
                 # Guide.ylabel("Binding Patterns"),
                 Guide.title("Enriched Patterns and their weights"), tufte_bar);
+    height = 3;
+    if size(df,1) == 2 
+        height =  5 
+    elseif size(df,1) > 2
+        height = Int(ceil(0.125*size(df,1)*log2(size(df,1))));
+    end
     
+    println(size(df,1))
     draw(PNG(pics_folder*"/mb.png", 
                 Gadfly.Measures.Length(:mm, 25.4*12),
-                Gadfly.Measures.Length(:mm, 25.4*3*length(size(df,1))),
+                Gadfly.Measures.Length(:mm, 25.4*height),
                 ), p)
     return selected_keys_sorted_update, 
            selected_config_weights_sorted, 

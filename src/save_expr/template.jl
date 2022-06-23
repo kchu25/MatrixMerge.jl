@@ -37,39 +37,25 @@ html_template=mt"""<!DOCTYPE html>
 <body>
 	<div style="display:flex;">
 		<div class="info" style="border:1px solid black; max-width: 500px">
-			Explanation for the PWM table:	
+			Notes:	
 			<ul>
-				<li><b>Label:</b> An assigned label for each motif.</li><br>
-				<li><b>Count:</b> The number of subsequences (substrings) used in the multiple sequence alignment (MSA) to estimate the PWM. Each subsequence in MSA comes from distinct input sequences in the dataset.</li><br>
-				<li><b>E-value</b>: The p-value from the Fisher exact test multiplied by the number of PWMs found. The Fisher exact test test on how much a PWM is <i>activated</i> in the training dataset vs. how much a PWM is activated the control dataset. The "<i>PWM activation</i>" means that the PWM can score above a fixed score-threshold, which we calculate using methods from <a href="https://almob.biomedcentral.com/articles/10.1186/1748-7188-2-15">Touzet et al.</a>. The control dataset is constructed by <a href="https://link.springer.com/article/10.1186/1471-2105-9-192">shuffling the nucleotides in the training dataset</a>; this shuffling preserves the frequency of the 3-mers in the training dataset. </li><br>
-				<ul>
-					<li>The less the e-value, the more statistically significant the discovered PWM: a statistically significant PWM is much more enriched in the training dataset in comparison to the control dataset. </li>
-				</ul>
+				<li><b>Label:</b> The assigned label for each motif.</li><br>
+				<li><b>Count:</b> The number of substrings used in the multiple sequence alignment to estimate the PWM.</li><br>
+				<li><b>E-value</b>: The p-value from the Fisher exact test multiplied by the number of PWMs found. </li><br>
+                <li>All the positions in the training dataset that used to estimate the PWMs are mutually disjoint. 
+                    </li><br>
 			</ul>
-			Explanation for the bar plot <i>Enriched Patterns and their weights</i>:
+			<i>Enriched Patterns and their weights</i>:
 			<ul>
-				<li>The labels on the y-axis are the <i><b>patterns</b></i>. The patterns show how combinations of PWMs are activated in the training dataset.</li><br>
+				<li>The labels on the y-axis are the <i>patterns</i>. The patterns show how combinations of PWMs are found in the training dataset.</li><br>
 				<ul>
-					<li>Each pattern shows the order of activations of each PWM. They are expressed in the order of scanning a sequence from the left to the right. For example, a label (D5, D2) means that D5 is activated on the left of the activation of D2.</li><br>
+					<li>The patterns are expressed in the order of scanning a sequence from the left to the right. For example, a label (D5, D2) means that D5 is activated on the left of the activation of D2.</li><br>
 					<li>rc(\( \cdot \)) means that the PWM was activated in its reverse complement orientation.</li><br>					
 				</ul>
-				<li>The weights shows how each patterns are enriched relative to each other in the training dataset. The weights sum to one.</li><br>
-				<li>We discard all the patterns that have negligible weights (weight less than 0.01). The rest of the weights are renormalized and presented in the plot. </li>
+				<li>The weights shows how each pattern is is enriched relative to each others in the training dataset. The weights sum to one.</li><br>
+				<li>We discard all the patterns that have negligible weights (weight less than 0.01). The rest of the weights are renormalized. </li>
 				<br>
-			</ul>
-            Other Notes:
-                <ul>
-                    <li>All the positions in the training dataset that used to estimate the PWMs are mutually disjoint. 
-                    </li><br>
-                </ul>
-				<br>
-				<br>	
-<!-- 			<center><h4>Likelihood ratio scores:</h4></center>
-			Let \(P_j\) be the position frequency matrix estimated from the \(j\)th learned motif and \(N_j\) be the number of sequences used in the estimation of \(P_j\).
-			The <i>likelihood ratio score</i> of the \(j\)th learned motif of length \(L\) is 
-			$$ \sum_{n=1}^{N_j}\sum_{\ell=1}^L \sum_{\alpha} \unicode{x1D7D9}\left[s_n[\ell]=\alpha\right] \, P_j[\alpha,\ell]\, \ln \frac{P_j[\alpha,\ell]}{B[\alpha]}$$
-			where \(B[\alpha]\) is the background frequency of nucleotide \(\alpha\), \(s_n\) the \(n\)th substring used in estimating \(P_j\),
-			and \(\unicode{x1D7D9}[\cdot]\) is the indicator function. In this experiment, \(B[\alpha]=1/4,\,\forall \alpha\).	 -->	
+			</ul>	
 		</div>
 		<div style="float:left; margin:25px; border:1px solid black; max-width:500px; padding:10px;" > 			
 			<table>
