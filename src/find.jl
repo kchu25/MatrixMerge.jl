@@ -125,6 +125,56 @@ function try_to_find_motif(filters, fil_size, data, target_folder_expr;
         @save target_folder_expr*"/gt_motif.jld2" g.data.motif
         motif_found && save_found_results_sim(target_folder_expr, g);
     else
-        motif_found && save_result_fasta(g, target_folder_expr);
+        if motif_found
+            save_result_fasta(g, target_folder_expr);
+        end
     end
+end
+
+
+# this is just for testing jarpar motifs
+function try_to_find_motif_jaspar(filters, fil_size, data, 
+                           source_p_v_out, expr_logos_p_v_transfac, ref_logo_where, ref_save_where; 
+                           number_trials=10,
+                           pval_thresh_inc=5e-4,
+                           eval_thresh_inc_1=2.5e-1,
+                           eval_thresh_inc_2=1e-2,
+                           simulated_data=false)                              
+    g=nothing; motif_found = false; 
+    pval_thresh = dat_t(2.7e-4);     
+    eval_thresh1 = dat_t(5e-1);                                       
+    eval_thresh2 = dat_t(1e-3);
+    num_trial_left = number_trials;
+    while(num_trial_left > 0)
+        try
+            g = good_stuff{int_t,dat_t}(data, 
+                                        SEARCH_setup{int_t, dat_t}(),
+                                        filters, fil_size
+                                        );
+            g.search.pval_thresh = pval_thresh;
+            g.search.e_value_thresh_1 = eval_thresh1;
+            g.search.e_value_thresh_2 = eval_thresh2;                                        
+            find_motif!(g)
+            motif_found = true;
+            break
+        catch e
+            if isa(e, ArgumentError)
+                pval_thresh += pval_thresh_inc;
+                eval_thresh1 += eval_thresh_inc_1;
+                eval_thresh2 += eval_thresh_inc_2;
+                @info "Did not find any motif..."
+                @info "Relax search p-value to $(round(pval_thresh,digits=4)) for the score threshold"
+                @info "Relax search e-value cutoff-1 to $(round(eval_thresh1,digits=4))"
+                @info "Relax search e-value cutoff-2 to $(round(eval_thresh2,digits=4))"
+                num_trial_left -= 1;
+            else
+                break
+            end        
+        end            
+    end
+
+    if motif_found
+        save_result_fasta_jaspar(g, source_p_v_out, expr_logos_p_v_transfac, ref_logo_where, ref_save_where);
+    end
+
 end

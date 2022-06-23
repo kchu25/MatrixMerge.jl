@@ -10,7 +10,8 @@ export good_stuff,
        find_motif!, 
        find_and_save_motif_sim,
        save_found_results_sim,
-       try_to_find_motif 
+       try_to_find_motif,
+       try_to_find_motif_jaspar
 
 include("SEARCH_setup.jl")
 include("wrapper.jl")

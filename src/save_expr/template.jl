@@ -52,8 +52,7 @@ html_template=mt"""<!DOCTYPE html>
 					<li>The patterns are expressed in the order of scanning a sequence from the left to the right. For example, a label (D5, D2) means that D5 is activated on the left of the activation of D2.</li><br>
 					<li>rc(\( \cdot \)) means that the PWM was activated in its reverse complement orientation.</li><br>					
 				</ul>
-				<li>The weights shows how each pattern is is enriched relative to each others in the training dataset. The weights sum to one.</li><br>
-				<li>We discard all the patterns that have negligible weights (weight less than 0.01). The rest of the weights are renormalized. </li>
+				<li>The weights shows how each pattern is is enriched relative to each others in the training dataset. The weights sum to one.</li><br>				
 				<br>
 			</ul>	
 		</div>
@@ -148,7 +147,8 @@ html_head2="<!DOCTYPE html>
                </style>
         </head>
         <div class=\"info\" style=\"border:1px solid black; max-width: 500px\">
-                            test test test
+            The number-of-nucleotides-in-between (if they appear) are kernel density estimates <br>
+            with Gaussian kernel and bandwidth set to $kde_bandwidth.
         </div>
         <body>
             <table>

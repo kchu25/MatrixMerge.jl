@@ -13,3 +13,5 @@ b_size_2d(X) = ceil.(Int, size(X) ./ threads_2d)
 b_size_3d(X) = ceil.(Int, size(X) ./ threads_3d)
 
 promote_i(x...) = Int.(x);
+
+const kde_bandwidth = 1.25;
