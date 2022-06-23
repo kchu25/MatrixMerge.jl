@@ -93,7 +93,6 @@ function try_to_find_motif(filters, fil_size, data, target_folder_expr;
     eval_thresh2 = dat_t(1e-3);
     num_trial_left = number_trials;
     while(num_trial_left > 0)
-        println(num_trial_left)
         try
             g = good_stuff{int_t,dat_t}(data, 
                                         SEARCH_setup{int_t, dat_t}(),
@@ -120,16 +119,12 @@ function try_to_find_motif(filters, fil_size, data, target_folder_expr;
             end        
         end            
     end
-    println("hi 1")
+    # println("hi 1")
     if simulated_data
         # for simulated data, if couldn't find anything, as least save the ground truth
         @save target_folder_expr*"/gt_motif.jld2" g.data.motif
         motif_found && save_found_results_sim(target_folder_expr, g);
     else
-        println("hi")
-        println("$(length(g.ms.pfms))")
-        println("$motif_found")
-        
         motif_found && save_result_fasta(g, target_folder_expr);
     end
 end

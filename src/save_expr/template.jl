@@ -118,7 +118,7 @@ html_template=mt"""<!DOCTYPE html>
 			<br><br>	
 		</div>	
         <div style="margin=25px; border:1px solid black;"> 		
-            <img src="other_pics/mb.png" style="width:90%; height:auto"><br><br><br>
+            <img src="other_pics/mb.png" style="width:85%; height:auto"><br><br><br>
             &nbsp&nbsp Check <a href="bp.html">here</a> to see more details on the enriched patterns.
         </div>
     </div>

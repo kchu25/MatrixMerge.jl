@@ -60,6 +60,17 @@ tufte_bar = Theme(
     major_label_font="Times", 
 )
 
+kde_theme = Theme(
+    line_width=1.25mm,
+    key_label_color="black",
+    key_label_font_size=25pt,
+    minor_label_font_size=35pt,
+    major_label_font_size=55pt,
+    minor_label_font="Times",
+    major_label_font="Times", 
+)
+
+
 function make_configurations_plots_2(configurations, 
                                    gap_configurations,
                                    pics_folder,
@@ -112,12 +123,16 @@ function make_configurations_plots_2(configurations,
                     for i in selected_keys_sorted_update]
     df=DataFrame(pattern=patterns, weights=selected_config_weights_sorted); df = sort(df, :weights);
     p = Gadfly.plot(df, y=:pattern, x=:weights,
-        Geom.bar(orientation=:horizontal),
-        Guide.xlabel("Weights", orientation=:horizontal),
-        Guide.ylabel("    "),
-        # Guide.ylabel("Binding Patterns"),
-        Guide.title("Enriched Patterns and their weights"), tufte_bar);
-    draw(PNG(pics_folder*"/mb.png", 12inch, 12inch), p)
+            Geom.bar(orientation=:horizontal),
+                Guide.xlabel("Weights", orientation=:horizontal),
+                Guide.ylabel("    "),
+                # Guide.ylabel("Binding Patterns"),
+                Guide.title("Enriched Patterns and their weights"), tufte_bar);
+    
+    draw(PNG(pics_folder*"/mb.png", 
+                Gadfly.Measures.Length(:mm, 25.4*12),
+                Gadfly.Measures.Length(:mm, 25.4*3*length(size(df,1))),
+                ), p)
     return selected_keys_sorted_update, 
            selected_config_weights_sorted, 
            selected_config_counts_sorted,
