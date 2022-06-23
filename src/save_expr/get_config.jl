@@ -47,6 +47,19 @@ function get_configurations(g::Union{good_stuff, Nothing})
     return configurations, gap_configurations
 end
 
+tufte_bar = Theme(
+    default_color=colorant"gray",
+    background_color=colorant"white", 
+    highlight_width=0.3mm,
+    bar_spacing=15pt,
+    major_label_font_size=24pt,
+    point_label_font_size=15pt,
+    minor_label_font_size=15pt,
+    grid_line_width=1pt, 
+    minor_label_font="Times",
+    major_label_font="Times", 
+)
+
 function make_configurations_plots_2(configurations, 
                                    gap_configurations,
                                    pics_folder,
@@ -103,8 +116,7 @@ function make_configurations_plots_2(configurations,
         Guide.xlabel("Weights", orientation=:horizontal),
         Guide.ylabel("    "),
         # Guide.ylabel("Binding Patterns"),
-        Guide.title("Enriched Patterns and their weights"),
-        tufte_bar);
+        Guide.title("Enriched Patterns and their weights"), tufte_bar);
     draw(PNG(pics_folder*"/mb.png", 12inch, 12inch), p)
     return selected_keys_sorted_update, 
            selected_config_weights_sorted, 

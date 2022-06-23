@@ -33,11 +33,15 @@ function find_motif!(g::good_stuff)
     # set up a higher ic threshold as most extensions is done beforehand
     g.search.ic_extension_thresh=0.6;
 
+    println(" motifs --- $(length(g.ms.pfms))")
+
     @time begin 
         last_ssc = Inf; cur_ssc = nothing;
         for j = 1:g.search.max_score_iter
             # println("$j-th iter")
+            # println("yyoyoo  111?")
             overlapping_scan!(g)
+            # println("yyoyoo 222?")
             non_overlap_scan!(g; re_evaluate_pfm=false, 
                                 re_evaluate_pwm=false, 
                                 re_evaluate_thresh=false)
@@ -52,10 +56,13 @@ function find_motif!(g::good_stuff)
             last_ssc = cur_ssc;        
         end
     end
+    println(" motifs --- $(length(g.ms.pfms))")
 
     @time begin
         last_ssc = Inf; cur_ssc = nothing;
+
         filter_using_evalue!(g; cpu=true, non_overlap=true);
+
         allr_merge!(g)
         rid_of_len_less_than_six!(g)
         for _ = 1:g.search.max_score_iter
@@ -70,6 +77,7 @@ function find_motif!(g::good_stuff)
             last_ssc = cur_ssc;
         end
     end
+    println(" motifs --- $(length(g.ms.pfms))")
 end
 
 
@@ -85,6 +93,7 @@ function try_to_find_motif(filters, fil_size, data, target_folder_expr;
     eval_thresh2 = dat_t(1e-3);
     num_trial_left = number_trials;
     while(num_trial_left > 0)
+        println(num_trial_left)
         try
             g = good_stuff{int_t,dat_t}(data, 
                                         SEARCH_setup{int_t, dat_t}(),
@@ -111,13 +120,16 @@ function try_to_find_motif(filters, fil_size, data, target_folder_expr;
             end        
         end            
     end
-    if motif_found
-        save_found_results_sim(target_folder_expr, g)
+    println("hi 1")
+    if simulated_data
+        # for simulated data, if couldn't find anything, as least save the ground truth
+        @save target_folder_expr*"/gt_motif.jld2" g.data.motif
+        motif_found && save_found_results_sim(target_folder_expr, g);
     else
-        if simulated_data
-            # for simulated data, if couldn't find anything, as least save the ground truth
-            @save target_folder_expr*"/gt_motif.jld2" g.data.motif
-        end
-        return nothing
+        println("hi")
+        println("$(length(g.ms.pfms))")
+        println("$motif_found")
+        
+        motif_found && save_result_fasta(g, target_folder_expr);
     end
 end

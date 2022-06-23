@@ -50,6 +50,7 @@ mutable struct good_stuff{T <: Integer, S <: Real}
 
         data.data_matrix = reshape(data.data_matrix, (4*data.L, data.N));
         data.data_matrix_gpu = reshape(data.data_matrix_gpu, (4*data.L,data.N));
+        data.data_matrix_bg = reshape(data.data_matrix_bg, (4*data.L, data.N));
 
         ms = motifs(
             pfms,

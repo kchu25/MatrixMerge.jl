@@ -3,7 +3,7 @@ module MatrixMerge
 using CUDA, DataStructures, DoubleFloats, 
       StatsBase, HypothesisTests, SimDNA,
       FastaLoader, JLD2, DataFrames, Mustache,
-      CSV, Gadfly
+      CSV, Gadfly, Cairo
 
 export good_stuff, 
        SEARCH_setup, 

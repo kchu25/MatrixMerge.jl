@@ -40,9 +40,9 @@ function save_result_fasta(g::Union{good_stuff, Nothing}, target_folder::String)
     pics_folder = target_folder*"/"*pics_folder_name
     if !isnothing(g)
         # make folders
-        !isdir(target_folder) && (mkdir(target_folder);)
-        !isdir(logo_folder) && (mkdir(logo_folder);)
-        !isdir(pics_folder) && (mkdir(pics_folder);)
+        !isdir(target_folder) && (mkpath(target_folder);)
+        !isdir(logo_folder) && (mkpath(logo_folder);)
+        !isdir(pics_folder) && (mkpath(pics_folder);)
         ###### save msa file for each pwm ################    
         evalues = filter_using_evalue!(g; cpu=true, non_overlap=true, get_evalues_only=true);            
         sort_perm = sortperm(evalues); # sort it according to e-values (small to big)

@@ -30,11 +30,11 @@ function overlapping_scan_bg!(g::good_stuff{T,S}) where {T,S}
             argmax_, score = scan_n(data_n,
                                     g.ms.pwms[k], 
                                     g.ms.lens[k], 
-                                    g.data.L);
+                                    T(g.data.L));
             argmax_c, score_c = scan_n(data_n,
                                     pwm_comp, 
                                     g.ms.lens[k], 
-                                    g.data.L);
+                                    T(g.data.L));
             if score ≥ score_c
                 score > g.ms.thresh[k] && (s[k][n] = score; p[k][n] = argmax_;)
             else
@@ -96,15 +96,15 @@ function overlapping_scan!(g::good_stuff{T,S},
     for k = 1:g.ms.num_motifs   
         pwm_comp = pwm_complement(g.ms.pwms[k]);        
         for n = 1:g.data.N
-            data_n = reshape(Base.view(g.data.data_matrix,:,n), (4, g.data.L));                       
+            data_n = reshape(Base.view(g.data.data_matrix,:,n), promote_i.(4, g.data.L));                       
             argmax_, score = scan_n(data_n,
                                     g.ms.pwms[k], 
                                     g.ms.lens[k], 
-                                    g.data.L);
+                                    T(g.data.L));
             argmax_c, score_c = scan_n(data_n,
                                     pwm_comp, 
                                     g.ms.lens[k], 
-                                    g.data.L);
+                                    T(g.data.L));
             if score ≥ score_c
                 (score > g.ms.thresh[k]) && (s[k][n] = score; p[k][n] = argmax_; u[k][n] = false;)
             else
