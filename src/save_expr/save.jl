@@ -103,7 +103,7 @@ end
 function get_rounded_eval(pval::Real)
     q = split("$pval", "e-");
     if length(q) == 1
-        q = string(q[1]);
+        q = string(round(parse(Float64, q[1]), digits=3));
         return "$q"
     else
         return join([q[1][1:4], q[2]], "e-")
@@ -128,7 +128,7 @@ function save_result_fasta_jaspar(g::Union{good_stuff, Nothing},
     details_link = "";    
     #############
 
-    if length(g.ms.pfms) != 0
+    if !isnothing(g) && length(g.ms.pfms) != 0
         # make folders
         !isdir(target_folder) && (mkpath(target_folder);)
         !isdir(logo_folder) && (mkpath(logo_folder);)
@@ -191,6 +191,7 @@ function save_result_fasta_jaspar(g::Union{good_stuff, Nothing},
         top3_logo_link = [complement_or_not[i] ? ref_save_where*"/logos/d$(i)_c.png" : ref_save_where*"/logos/d$i.png" for i = 1:top3];
         details_link = ref_save_where*"/summary.html";
     end
+    
     return (name=matrix_name,
             jaspar_link="https://jaspar.genereg.net/matrix/"*matrix_name, 
             jaspar_logo=ref_logo_where, 
