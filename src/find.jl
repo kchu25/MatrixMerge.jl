@@ -7,7 +7,7 @@ function get_ssc(g::good_stuff)
 end
 
 function find_motif!(g::good_stuff)
-    @time for _ = 1:g.search.default_max_iter
+    for _ = 1:g.search.default_max_iter
         scan_w_gpu!(g, g.data.data_matrix_gpu; re_evaluate_pfm=false,
                                                re_evaluate_pwm=false,
                                                re_evaluate_thresh=false);
@@ -20,7 +20,7 @@ function find_motif!(g::good_stuff)
                         re_evaluate_thresh=true);
     end
 
-    @time begin 
+    begin 
         filter_using_evalue!(g);
         allr_merge!(g; re_evaluate_pwm=false,
                        re_evaluate_thresh=false);
@@ -33,7 +33,7 @@ function find_motif!(g::good_stuff)
     # set up a higher ic threshold as most extensions is done beforehand
     g.search.ic_extension_thresh=0.6;
 
-    println(" motifs --- $(length(g.ms.pfms))")
+    # println(" motifs --- $(length(g.ms.pfms))")
 
     @time begin 
         last_ssc = Inf; cur_ssc = nothing;
@@ -56,9 +56,9 @@ function find_motif!(g::good_stuff)
             last_ssc = cur_ssc;        
         end
     end
-    println(" motifs --- $(length(g.ms.pfms))")
+    # println(" motifs --- $(length(g.ms.pfms))")
 
-    @time begin
+    begin
         last_ssc = Inf; cur_ssc = nothing;
 
         filter_using_evalue!(g; cpu=true, non_overlap=true);
@@ -77,7 +77,8 @@ function find_motif!(g::good_stuff)
             last_ssc = cur_ssc;
         end
     end
-    println(" motifs --- $(length(g.ms.pfms))")
+    @info "Found $(length(g.ms.pfms)) motif(s)"
+    # println(" motifs --- $(length(g.ms.pfms))")
 end
 
 
@@ -134,7 +135,7 @@ end
 
 # this is just for testing jarpar motifs
 function try_to_find_motif_jaspar(filters, fil_size, data, 
-                           source_p_v_out, expr_logos_p_v_transfac, ref_logo_where, ref_save_where)
+                           source_p_v_out, expr_logos_p_v_transfac, ref_logo_where, ref_save_where, matrix_name)
     g=nothing; motif_found = false; 
     pval_thresh = dat_t(2.7e-4);
     eval_thresh1 = dat_t(5e-1);
@@ -156,5 +157,5 @@ function try_to_find_motif_jaspar(filters, fil_size, data,
         end
     end
 
-    return motif_found, save_result_fasta_jaspar(g, source_p_v_out, expr_logos_p_v_transfac, ref_logo_where, ref_save_where);
+    return motif_found, save_result_fasta_jaspar(g, source_p_v_out, expr_logos_p_v_transfac, ref_logo_where, ref_save_where, matrix_name);
 end

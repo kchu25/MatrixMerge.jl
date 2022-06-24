@@ -100,11 +100,17 @@ function save_result_fasta(g::Union{good_stuff, Nothing}, target_folder::String)
     end
 end
 
+function get_rounded_eval(pval::Real)
+    q = split("$pval", "e-");
+    join([q[1][1:4], q[2]], "e-")
+end
+
 function save_result_fasta_jaspar(g::Union{good_stuff, Nothing}, 
                                   target_folder::String, 
                                   source_folder_logo_transfac::String,
                                   ref_logo_where::String,
-                                  ref_save_where::String
+                                  ref_save_where::String,
+                                  matrix_name::String
                                   )
     logo_folder_name = "logos"
     pics_folder_name = "other_pics"
@@ -114,7 +120,7 @@ function save_result_fasta_jaspar(g::Union{good_stuff, Nothing},
     # for summary
     top3_evalues = Vector{Real}();
     top3_logo_link = Vector{String}();
-    details_link = Vector{String}();    
+    details_link = "";    
     #############
 
     if length(g.ms.pfms) != 0
@@ -126,7 +132,8 @@ function save_result_fasta_jaspar(g::Union{good_stuff, Nothing},
         evalues = filter_using_evalue!(g; cpu=true, non_overlap=true, get_evalues_only=true);            
         sort_perm = sortperm(evalues); # sort it according to e-values (small to big)
         sort_perm_map = Dict(item=>index for (index,item) in enumerate(sort_perm));
-        evalues = round.(round.(evalues[sort_perm] .* 10, sigdigits=3) ./ 10, sigdigits=3);
+        evalues = get_rounded_eval.(evalues[sort_perm]);
+        # round.(round.(evalues[sort_perm] .* 10, sigdigits=3) ./ 10, sigdigits=3);
         # println(evalues[1])
         scores = [round(sum(values(g.ms.scores[i])),digits=1)
                     for i = 1:g.ms.num_motifs][sort_perm]; # scores of each discovered motifs
@@ -179,5 +186,10 @@ function save_result_fasta_jaspar(g::Union{good_stuff, Nothing},
         top3_logo_link = [complement_or_not[i] ? ref_save_where*"/logos/d$(i)_c.png" : ref_save_where*"/logos/d$i.png" for i = 1:top3];
         details_link = ref_save_where*"/summary.html";
     end
-    return (jaspar_logo=ref_logo_where, top3_evalues=top3_evalues, top3_logo_link=top3_logo_link, details_link=details_link)
+    return (name=matrix_name,
+            jaspar_link="https://jaspar.genereg.net/matrix/"*matrix_name, 
+            jaspar_logo=ref_logo_where, 
+            top3_evalues=top3_evalues, 
+            top3_logo_link=top3_logo_link, 
+            details_link=details_link)
 end
