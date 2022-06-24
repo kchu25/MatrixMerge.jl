@@ -102,7 +102,12 @@ end
 
 function get_rounded_eval(pval::Real)
     q = split("$pval", "e-");
-    join([q[1][1:4], q[2]], "e-")
+    if length(q) == 1
+        q = string(q[1]);
+        return "$q"
+    else
+        return join([q[1][1:4], q[2]], "e-")
+    end
 end
 
 function save_result_fasta_jaspar(g::Union{good_stuff, Nothing}, 
