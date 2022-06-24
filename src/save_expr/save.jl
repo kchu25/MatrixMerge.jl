@@ -112,12 +112,12 @@ function save_result_fasta_jaspar(g::Union{good_stuff, Nothing},
     pics_folder = target_folder*"/"*pics_folder_name
     
     # for summary
-    top3_evalues = nothing;
-    top3_logo_link = nothing;
-    details_link = nothing;    
+    top3_evalues = Vector{Real}();
+    top3_logo_link = Vector{String}();
+    details_link = Vector{String}();    
     #############
 
-    if !isnothing(g)
+    if length(g.ms.pfms) != 0
         # make folders
         !isdir(target_folder) && (mkpath(target_folder);)
         !isdir(logo_folder) && (mkpath(logo_folder);)
@@ -126,7 +126,8 @@ function save_result_fasta_jaspar(g::Union{good_stuff, Nothing},
         evalues = filter_using_evalue!(g; cpu=true, non_overlap=true, get_evalues_only=true);            
         sort_perm = sortperm(evalues); # sort it according to e-values (small to big)
         sort_perm_map = Dict(item=>index for (index,item) in enumerate(sort_perm));
-        evalues = round.(evalues[sort_perm], sigdigits=3);
+        evalues = round.(round.(evalues[sort_perm] .* 10, sigdigits=3) ./ 10, sigdigits=3);
+        # println(evalues[1])
         scores = [round(sum(values(g.ms.scores[i])),digits=1)
                     for i = 1:g.ms.num_motifs][sort_perm]; # scores of each discovered motifs
         msa_counts = [length(g.ms.positions[j]) for j = 1:g.ms.num_motifs][sort_perm];
@@ -178,5 +179,5 @@ function save_result_fasta_jaspar(g::Union{good_stuff, Nothing},
         top3_logo_link = [complement_or_not[i] ? ref_save_where*"/logos/d$(i)_c.png" : ref_save_where*"/logos/d$i.png" for i = 1:top3];
         details_link = ref_save_where*"/summary.html";
     end
-    return (jarpar_logo=ref_logo_where, top3_evalues=top3_evalues, top3_logo_link=top3_logo_link, details_link=details_link)
+    return (jaspar_logo=ref_logo_where, top3_evalues=top3_evalues, top3_logo_link=top3_logo_link, details_link=details_link)
 end

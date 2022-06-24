@@ -147,8 +147,7 @@ html_head2="<!DOCTYPE html>
                </style>
         </head>
         <div class=\"info\" style=\"border:1px solid black; max-width: 500px\">
-            The number-of-nucleotides-in-between (if they appear) are kernel density estimates <br>
-            with Gaussian kernel and bandwidth set to $kde_bandwidth.
+            The number-of-nucleotides-in-between (if they appear) are kernel density estimates with Gaussian kernel and bandwidth set to $kde_bandwidth.
         </div>
         <body>
             <table>
@@ -160,9 +159,9 @@ html_end="</tbody>
         </body>"
 
 function print_table_body(num_gap::Int)
-    top_row = "<td>Weights</td><td># Occurence</td><td>Part 1</td>";
+    top_row = "<td>Weights</td><td># Occurence</td><td>Block 1</td>";
     for i = 1:num_gap
-        top_row = top_row*"<td>Gap $i</td><td>Part $(i+1)</td>"
+        top_row = top_row*"<td>Gap $i</td><td>Block $(i+1)</td>"
     end
     top_row = "<tr class=\"top_row\">"*top_row*"</tr>"
 
