@@ -101,11 +101,11 @@ function save_result_fasta(g::Union{good_stuff, Nothing}, target_folder::String)
 end
 
 function get_rounded_eval(pval::Real)
-    q = split("$pval", "e-");
-    if length(q) == 1
-        q = string(round(parse(Float64, q[1]), digits=3));
-        return "$q"
+    str = "$pval";
+    if !occursin("e-", str)
+        return string(round(pval, sigdigits=3));
     else
+        q = split(str, "e-");
         return join([q[1][1:4], q[2]], "e-")
     end
 end

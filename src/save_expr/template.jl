@@ -51,7 +51,7 @@ html_template=mt"""<!DOCTYPE html>
 				<ul>
 					<li>The patterns are expressed in the order of scanning a sequence from the left to the right. For example, a label (D5, D2) means that D5 is activated on the left of the activation of D2.</li><br>
 					<li>rc(\( \cdot \)) means that the PWM was activated in its reverse complement orientation.</li><br>
-                    <li>"Activated" means that the PWM was scored above a score threshold; the score threshold is determined using <a href="https://almob.biomedcentral.com/articles/10.1186/1748-7188-2-15">this</a>.</li>
+                    <li>"Activated" means that the PWM was scored above a score threshold; the score threshold is determined using <a href="https://almob.biomedcentral.com/articles/10.1186/1748-7188-2-15">this</a>.</li><br>
 				</ul>
 				<li>The weights shows how each pattern is is enriched relative to each others in the training dataset. The weights sum to one.</li><br>
 				<br>
