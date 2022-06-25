@@ -37,7 +37,7 @@ html_template=mt"""<!DOCTYPE html>
 <body>
 	<div style="display:flex;">
 		<div class="info" style="border:1px solid black; max-width: 500px">
-			Notes:	
+			For each column:	
 			<ul>
 				<li><b>Label:</b> The assigned label for each motif.</li><br>
 				<li><b>Count:</b> The number of substrings used in the multiple sequence alignment to estimate the PWM.</li><br>
@@ -45,14 +45,15 @@ html_template=mt"""<!DOCTYPE html>
                 <li>All the positions in the training dataset that used to estimate the PWMs are mutually disjoint. 
                     </li><br>
 			</ul>
-			<i>Enriched Patterns and their weights</i>:
+			<i>Enriched Patterns:</i>:
 			<ul>
 				<li>The labels on the y-axis are the <i>patterns</i>. The patterns show how combinations of PWMs are found in the training dataset.</li><br>
 				<ul>
 					<li>The patterns are expressed in the order of scanning a sequence from the left to the right. For example, a label (D5, D2) means that D5 is activated on the left of the activation of D2.</li><br>
-					<li>rc(\( \cdot \)) means that the PWM was activated in its reverse complement orientation.</li><br>					
+					<li>rc(\( \cdot \)) means that the PWM was activated in its reverse complement orientation.</li><br>
+                    <li>"Activated" means that the PWM was scored above a score threshold; the score threshold is determined using <a href="https://almob.biomedcentral.com/articles/10.1186/1748-7188-2-15">this</a>.</li>
 				</ul>
-				<li>The weights shows how each pattern is is enriched relative to each others in the training dataset. The weights sum to one.</li><br>				
+				<li>The weights shows how each pattern is is enriched relative to each others in the training dataset. The weights sum to one.</li><br>
 				<br>
 			</ul>	
 		</div>

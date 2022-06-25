@@ -126,7 +126,7 @@ function make_configurations_plots_2(configurations,
                 Guide.xlabel("Weights", orientation=:horizontal),
                 Guide.ylabel("    "),
                 # Guide.ylabel("Binding Patterns"),
-                Guide.title("Enriched Patterns and their weights"), tufte_bar);
+                Guide.title("Enriched Patterns"), tufte_bar);
                 
     height = 3;
     if size(df,1) == 2 
