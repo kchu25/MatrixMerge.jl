@@ -74,7 +74,7 @@ function make_configurations_plots_2(configurations,
                                    gap_configurations,
                                    pics_folder,
                                    sort_perm_map; 
-                                   threshold_weight=0.001,
+                                   threshold_weight=0.002,
                                    kde_bandwidth=kde_bandwidth)
     config_counts = [configurations[k] for k in keys(configurations)];
     config_weights = config_counts ./ sum(config_counts);
@@ -127,6 +127,7 @@ function make_configurations_plots_2(configurations,
                 Guide.ylabel("    "),
                 # Guide.ylabel("Binding Patterns"),
                 Guide.title("Enriched Patterns and their weights"), tufte_bar);
+                
     height = 3;
     if size(df,1) == 2 
         height =  5 
@@ -134,7 +135,9 @@ function make_configurations_plots_2(configurations,
         height = Int(ceil(0.125*size(df,1)*log2(size(df,1))));
     end
     
-    # println(size(df,1))
+
+    println(size(df,1))
+
     draw(PNG(pics_folder*"/mb.png", 
                 Gadfly.Measures.Length(:mm, 25.4*12),
                 Gadfly.Measures.Length(:mm, 25.4*height),
