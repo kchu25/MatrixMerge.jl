@@ -123,7 +123,11 @@ function try_to_find_motif(filters, fil_size, data, target_folder_expr;
     # println("hi 1")
     if simulated_data
         # for simulated data, if couldn't find anything, as least save the ground truth
-        @save target_folder_expr*"/gt_motif.jld2" g.data.motif
+        # println("here~1")
+        # println(target_folder_expr*"/gt_motif.jld2")
+        jldsave(target_folder_expr*"/gt_motif.jld2";  g.data.motif)
+        # @save target_folder_expr*"/gt_motif.jld2" g.data.motif
+        # println("here~2")
         motif_found && save_found_results_sim(target_folder_expr, g);
     else
         if motif_found
