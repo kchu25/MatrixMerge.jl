@@ -103,6 +103,19 @@ function try_to_find_motif(filters, fil_size, data, target_folder_expr;
             g.search.e_value_thresh_1 = eval_thresh1;
             g.search.e_value_thresh_2 = eval_thresh2;                                        
             find_motif!(g)
+
+            if all(g.ms.lens .≤ 9)
+                @info "All motif has length less or equal to 9; relax the p-value threshold."
+                g = good_stuff{int_t,dat_t}(data, 
+                                        SEARCH_setup{int_t, dat_t}(),
+                                        filters, fil_size
+                                        );
+                g.search.pval_thresh = pval_thresh+1.5e-4;
+                g.search.e_value_thresh_1 = eval_thresh1;
+                g.search.e_value_thresh_2 = eval_thresh2;      
+                find_motif!(g)
+            end
+
             motif_found = true;
             break
         catch e
